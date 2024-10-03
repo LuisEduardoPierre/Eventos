@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Eventos.API.Models;
+using Eventos.API.Data;
 
 namespace Eventos.API.Controllers
 {
@@ -12,41 +13,20 @@ namespace Eventos.API.Controllers
     [Route("api/[controller]")]
     public class EventoController : ControllerBase
     {
-        public IEnumerable<Evento> _evento = new Evento[]{
-                new Evento(){
-
-                    EventoId = 1,
-                    Tema = "Agular 13 e .NET 6",
-                    Local = "BH",
-                    Lote = "1° Lote",
-                    QtdPessoas = 250,
-                    DataEvento = DateTime.Now.AddDays(2).ToString(),
-                    ImagemURL = "Foto.png"
-                      },
-                new Evento(){
-
-                    EventoId = 2,
-                    Tema = "Agular e suas novidades",
-                    Local = "SP",
-                    Lote = "2° Lote",
-                    QtdPessoas = 400,
-                    DataEvento = DateTime.Now.AddDays(3).ToString("dd/MM/yyyy"),
-                    ImagemURL = "Banner.png"
-                      },
-
-        };
-        public EventoController()
+        private readonly DataContext _context;
+        public EventoController(DataContext context)
         {
+            _context = context;
 
         }
 
         [HttpGet]
         public IEnumerable<Evento> Get(){
-            return _evento;
+            return _context.Eventos;
     }
         [HttpGet("{id}")]
-        public IEnumerable<Evento> GetById(int id){
-            return _evento.Where(EventoController => EventoController.EventoId == id);
+        public Evento GetById(int id){
+            return _context.Eventos.FirstOrDefault(EventoController => EventoController.EventoId == id);
     }
 
         [HttpPost]
@@ -66,5 +46,6 @@ namespace Eventos.API.Controllers
         {
             return $"Exemplo Delete com id = {id}";
         }
+    
     }
 }
