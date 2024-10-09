@@ -7,17 +7,23 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { PalestrantesComponent } from './palestrantes/palestrantes.component';
 import { EventosComponent } from './eventos/eventos.component';
+import { NavComponent } from './nav/nav.component';
+import { FormsModule } from '@angular/forms';
+
+
 
 @NgModule({
   declarations: [
     AppComponent,
     PalestrantesComponent,
-    EventosComponent
+    EventosComponent,
+    NavComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
+    FormsModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
